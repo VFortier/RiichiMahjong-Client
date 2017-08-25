@@ -18,7 +18,7 @@ export class AppComponent {
 
   onFindAGame() {
     // Make the HTTP request:
-    this.http.get('http://localhost:3600/').subscribe(data => {
+    this.http.post('http://localhost:3600/queue/find', this.player).subscribe(data => {
       // Read the result field from the JSON response.
       console.log(data);
       this.httpRes = data['success'];
