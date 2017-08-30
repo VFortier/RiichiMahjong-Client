@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   constructor(private http: HttpClient) {}
 
+  socket = io('localhost:9092');
   title = 'Riichi Mahjong';
   player: Player = {
     name: ''
@@ -17,12 +19,7 @@ export class AppComponent {
   httpRes = '';
 
   onFindAGame() {
-    // Make the HTTP request:
-    this.http.post('http://localhost:3600/queue/find', this.player).subscribe(data => {
-      // Read the result field from the JSON response.
-      console.log(data);
-      this.httpRes = data['success'];
-    });
+    this.socket.emit('find_game', { player: this.player.name });
   }
 }
 
