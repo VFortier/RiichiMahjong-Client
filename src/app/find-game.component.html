@@ -1,0 +1,10 @@
+<div style="text-align: center">
+  <h1>Welcome to {{title}}!</h1>
+  <div>
+    <label>Player name: </label>
+    <input [(ngModel)]="player.name" placeholder="name">
+    <button (click)="onFindAGame()">Find a Game</button>
+    <div>{{httpRes}}</div>
+  </div>
+</div>
+
