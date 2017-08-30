@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as io from 'socket.io-client';
+
+import { SocketService } from './socket.service';
 
 @Component({
   selector: 'app-find-game',
@@ -8,9 +9,12 @@ import * as io from 'socket.io-client';
   // styleUrls: ['./app.component.css']
 })
 export class FindGameComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private socketService: SocketService) {
+    socketService.on('game_found', function (data) {
+      console.log(data);
+    });
+  }
 
-  socket = io('localhost:9092');
   title = 'Riichi Mahjong';
   player: Player = {
     name: ''
@@ -19,10 +23,7 @@ export class FindGameComponent {
   httpRes = '';
 
   onFindAGame() {
-    this.socket.emit('find_game', { player: this.player.name });
-    this.socket.on('game_found', function (data) {
-      console.log(data);
-    });
+    this.socketService.emit('find_game', { name: this.player.name });
   }
 }
 
