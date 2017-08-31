@@ -15,9 +15,15 @@ export class AppComponent {
     socketService.init();
   }
 
-  isInGame = false;
+  isInGame: IsInGame = {
+    value: false,
+  };
 }
 
 export class Player {
   name: string;
+}
+
+export class IsInGame {
+  value: boolean;
 }

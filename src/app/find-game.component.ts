@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { IsInGame, Player } from './app.component';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { SocketService } from './socket.service';
@@ -8,25 +9,23 @@ import { SocketService } from './socket.service';
   templateUrl: './find-game.component.html',
   // styleUrls: ['./app.component.css']
 })
-export class FindGameComponent {
-  constructor(private socketService: SocketService) {
-    socketService.on('game_found', function (data) {
-      console.log(data);
-    });
-  }
+export class FindGameComponent implements OnInit {
+  @Input() isInGame: IsInGame;
 
   title = 'Riichi Mahjong';
   player: Player = {
     name: ''
   };
 
-  httpRes = '';
+  constructor(private socketService: SocketService) { }
+
+  ngOnInit() {
+    this.socketService.on('game_found', (data) => {
+      this.isInGame.value = true;
+    });
+  }
 
   onFindAGame() {
     this.socketService.emit('find_game', { name: this.player.name });
   }
-}
-
-export class Player {
-  name: string;
 }

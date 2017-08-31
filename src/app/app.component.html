@@ -1,4 +1,4 @@
 <div style="text-align: center">
-  <app-find-game *ngIf="!isInGame"></app-find-game>
-  <app-game *ngIf="isInGame"></app-game>
+  <app-find-game *ngIf="!isInGame.value" [isInGame]="isInGame"></app-find-game>
+  <app-game *ngIf="isInGame.value"></app-game>
 </div>
