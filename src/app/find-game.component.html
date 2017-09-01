@@ -2,9 +2,9 @@
   <h1>Welcome to {{title}}!</h1>
   <div>
     <label>Player name: </label>
-    <input [(ngModel)]="player.name" placeholder="name">
-    <button (click)="onFindAGame()">Find a Game</button>
-    <div>isInGame: {{isInGame.value}}</div>
+    <input [(ngModel)]="player.name" placeholder="name" [disabled]="gameFindingState.state === findGameState.FINDING">
+    <button (click)="onFindAGame()" [disabled]="gameFindingState.state === findGameState.FINDING">Find a Game</button>
+    <div>{{gameFindingMessage}}</div>
   </div>
 </div>
 

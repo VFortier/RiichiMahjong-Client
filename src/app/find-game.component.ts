@@ -1,4 +1,5 @@
-import { IsInGame, Player } from './app.component';
+import { Player } from './app.component';
+import { FindGameState, GameFindingState } from './game-finding-state';
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,8 +11,10 @@ import { SocketService } from './socket.service';
   // styleUrls: ['./app.component.css']
 })
 export class FindGameComponent implements OnInit {
-  @Input() isInGame: IsInGame;
+  @Input() gameFindingState: GameFindingState;
 
+  findGameState = FindGameState;
+  gameFindingMessage = '';
   title = 'Riichi Mahjong';
   player: Player = {
     name: ''
@@ -21,11 +24,13 @@ export class FindGameComponent implements OnInit {
 
   ngOnInit() {
     this.socketService.on('game_found', (data) => {
-      this.isInGame.value = true;
+      this.gameFindingState.state = FindGameState.FOUND;
     });
   }
 
   onFindAGame() {
+    this.gameFindingMessage = 'Finding game...';
+    this.gameFindingState.state = FindGameState.FINDING;
     this.socketService.emit('find_game', { name: this.player.name });
   }
 }
