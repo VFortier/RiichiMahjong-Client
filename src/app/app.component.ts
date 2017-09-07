@@ -1,5 +1,5 @@
 import { FindGameState, GameFindingState } from './game-finding-state';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as io from 'socket.io-client';
 
@@ -12,18 +12,22 @@ import { SocketService } from './socket.service';
   providers: [SocketService],
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   findGameState = FindGameState;
+
+  gameFindingState: GameFindingState = {
+    state: FindGameState.INITIAL,
+  };
 
   constructor(private socketService: SocketService) {
     socketService.init();
   }
 
-  gameFindingState: GameFindingState = {
-    state: FindGameState.INITIAL,
-  };
-}
-
-export class Player {
-  name: string;
+  ngOnInit() {
+    console.log('Init AppComponent');
+    this.socketService.on('game_found', (data) => {
+      this.gameFindingState.state = FindGameState.FOUND;
+      console.log(data);
+    });
+  }
 }
