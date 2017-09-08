@@ -14,6 +14,7 @@ import { SocketService } from './socket.service';
 
 export class AppComponent implements OnInit {
   findGameState = FindGameState;
+  game = null;
 
   gameFindingState: GameFindingState = {
     state: FindGameState.INITIAL,
@@ -25,9 +26,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     console.log('Init AppComponent');
-    this.socketService.on('game_found', (data) => {
+    this.socketService.on('game_found', (game) => {
+      this.game = game;
       this.gameFindingState.state = FindGameState.FOUND;
-      console.log(data);
     });
   }
 }

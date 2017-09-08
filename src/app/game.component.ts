@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { SocketService } from './socket.service';
 
@@ -8,14 +8,11 @@ import { SocketService } from './socket.service';
   // styleUrls: ['./app.component.css']
 })
 export class GameComponent implements OnInit {
-
+  @Input() game: Object;
 
   constructor(private socketService: SocketService) { }
 
   ngOnInit() {
-    console.log('GameComponent');
-//    this.socketService.on('game_found', (data) => {
-//      this.gameFindingState.state = FindGameState.FOUND;
-//    });
+    console.log(this.game);
   }
 }

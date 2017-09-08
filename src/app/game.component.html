@@ -1,1 +1,4 @@
-<h1>Hey, you're in a game.</h1>
+<div>You are {{game.myPlayer.name}}</div>
+<div>You are playing against 
+    <div *ngFor="let otherPlayer of game.otherPlayers">{{otherPlayer.name}}</div>
+</div> 
